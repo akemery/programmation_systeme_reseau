@@ -38,6 +38,11 @@ int main(int argc, char *argv[]){
         if(strcmp(buffer, "N")==0)
           break;
       }
+      ret = close(fd[i][0]);
+      if(ret < 0){
+        fprintf(stderr, "Fils (%d) impossible de fermer l'extrémité fd[0] du pipe (%d)\n", getpid(), errno);
+        return 1;
+      }
       return 0;
     }
     else{
@@ -68,6 +73,13 @@ int main(int argc, char *argv[]){
     }
     if(carac == 'N')
       break;
+  }
+  for(i = 0; i < 4; i++){
+    ret = close(fd[i][1]);
+    if(ret < 0){
+      fprintf(stderr, "Père (%d) impossible de fermer l'extrémité fd[1] du pipe (%d)\n", getpid(), errno);
+      return 1;
+    }
   }
   for(i = 0; i < 4; i++){
       int status;
