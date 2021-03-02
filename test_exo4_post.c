@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <string.h>
 int main(int argc, char *argv[]){
   int i;
   pid_t pid[4];
@@ -27,12 +28,16 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Fils (%d) impossible de fermer l'extrémité fd[1] du pipe (%d)\n", getpid(), errno);
         return 1;
       }
-      int ret = read(fd[i][0], buffer, 1);
-      if(ret < 0){
-        fprintf(stderr, "Fils (%d) impossible de lire sur fd[0] du pipe (%d)\n", getpid(), errno);
-        return 1;
+      while(1){
+        int ret = read(fd[i][0], buffer, 1);
+        if(ret < 0){
+          fprintf(stderr, "Fils (%d) impossible de lire sur fd[0] du pipe (%d)\n", getpid(), errno);
+          return 1;
+        }
+        fprintf(stdout, "<%s>, (%d)\n", buffer, getpid());
+        if(strcmp(buffer, "N")==0)
+          break;
       }
-      fprintf(stdout, "<%s>, (%d)\n", buffer, getpid());
       return 0;
     }
     else{
@@ -53,6 +58,7 @@ int main(int argc, char *argv[]){
     if(carac == '\n')
       continue;
     sprintf(strcarac, "%c", carac);
+    printf("(%s)\n",strcarac);
     for(i = 0; i < 4; i++){
       ret = write(fd[i][1], strcarac, 1);
       if(ret < 0){
