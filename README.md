@@ -118,3 +118,23 @@ Le factoriel de 12 est 479001600
 
 ```
 
+## Exemple d'exécution de shared_mem.c
+### Compilation
+
+```
+gcc shared_mem.c -o shared_mem
+
+```
+
+### Tests
+Vous pouvez répéter plusieurs fois l'étape suivante:
+
+```
+./shared_mem
+```
+
+Pour plus d'information sur les mémoires paratgées, les sémaphores veuillez
+visiter le lien suivant: https://docs.oracle.com/cd/E19455-01/806-4750/6jdqdfltg/index.html
+
+
+
