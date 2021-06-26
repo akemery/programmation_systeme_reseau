@@ -23,6 +23,6 @@ int main(int argc, char *argv[]){
     if(c == 'N')
       break;
   }
-    //pause();
+  pause();
   return 0;
 }

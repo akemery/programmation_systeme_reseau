@@ -20,33 +20,30 @@ Semaphore mutex = 1 ;
 Semaphore empty = N ;
 Semaphore full = 0 ;
 
-Void producer(void)
-{
-int item;
-while(TRUE)
-{
-item=produce(item);
-down(&empty);
-down(&mutex);
-insert_item();
-up(&mutex);
-up(&full);
-}
+Void producer(void){
+  int item;
+  while(TRUE){
+    item=produce(item);
+    down(&empty);
+    down(&mutex);
+    insert_item();
+    up(&mutex);
+    up(&full);
+  }
 }
 ```
 
 ```
 void consumer(void)
 {
-int item;
-while(TRUE)
-{
-down(&full);
-down(&mutex);
-item=remove(item);
-up(&mutex);
-up(&empty);
-}
+  int item;
+  while(TRUE){
+    down(&full);
+    down(&mutex);
+    item=remove(item);
+    up(&mutex);
+    up(&empty);
+  }
 ```
 
 Mutex : exclusion mutuelle pour l'accès au buffer
@@ -54,10 +51,70 @@ Empty : nombre de places libres dans le buffer
 Full : nombre de places occupées dans le buffer
 
 Implémenter dans le langage de votre choix l'algorithme. Les producteurs produisent
-toutes les 2 secondes tandis que les consommateurs produisent toutes les 6 secondes.
+toutes les 2 secondes tandis que les consommateurs consomment toutes les 6 secondes.
 
 Vous devez donner le choix à l'utilisateur de saisir au démarrage du programme le
 nombre de producteurs, le nombre de consommateurs et le nombres d'élements maximum 
 à produire (i.e la taille de la mémoire partagée).
 
 Donner la possibilité d'afficher toutes les secondes le contenu de la mémoire partagée.
+
+
+# Pistes
+
+## Exemple d'exécution de fork_ex.c
+
+```
+$ gcc fork_ex.c -o fork
+$ ./fork
+```
+
+## Exemple d'exécution de exec_ex.c
+Compilation de test_facto.c pour produire le programme `facto`
+
+``` 
+$ gcc test_facto.c -o facto
+```
+
+Compilation de test_pal.c pour produire le programme `pal`
+
+```
+$ gcc test_pal.c -o pal
+```
+
+Test de `facto`
+
+```
+$ ./facto
+USAGE: ./facto <entier>
+
+$ ./facto 12
+Le factoriel de 12 est 479001600
+```
+
+Test de `pal`
+
+```
+./pal 
+USAGE: ./pal <chaine de caractere>
+./pal sas
+sas est un palindrome
+```
+
+Compilation de exec_ex.c
+
+```
+$ gcc exec_ex.c -o exec
+```
+
+Test de `exec`
+
+```
+$ ./exec kevin
+kevin n'est pas un palindrome
+
+$ ./exec 12
+Le factoriel de 12 est 479001600
+
+```
+

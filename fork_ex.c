@@ -20,5 +20,6 @@ int main(int argc , char *argv[]){
     printf("Je suis le père (%d) mon fils que je viens de créer (%d)" 
            "s'est terminé avec le code d'erreur (%d)", getpid(), pid, status);
   }
+  printf("Ou suis-je?\n");
   return 0;
 }
