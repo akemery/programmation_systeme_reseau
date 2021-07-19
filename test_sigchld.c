@@ -4,14 +4,15 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void handle_sigchld(int number){
   int status;
   fprintf(stderr, "\n%ld a recu le signal %d (%s)\n", 
     (long) getpid(), number, strsignal(number)); 
   pid_t pid = wait(&status);
-  fprintf(stderr, "\Mon fils (%d) vient de se terminer (%d)\n", 
-    pid, status); 	
+  fprintf(stderr, "\Mon fils (%d) vient de se terminer (%d)\n", pid, status); 	
          
 }
 
