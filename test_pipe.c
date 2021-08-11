@@ -33,8 +33,8 @@ int main(int argc, char *argv[]){
     close(fd[0]); /* Le père ferme l'extrémité de lecture du pipe*/
     char buffer[10];
     while(1){
-      scanf("%s", buffer); /* Le père lit une chaine de caractère saisie au clavier*/
-      write(fd[1], buffer, strlen(buffer)); /* le père écrit la chaine de caractère dans le pipe */
+      int n = scanf("%s", buffer); /* Le père lit une chaine de caractère saisie au clavier*/
+      write(fd[1], buffer, n); /* le père écrit la chaine de caractère dans le pipe */
       if(strcmp(buffer, "N")==0) /* L'utilisateur met fin au programme*/
         break;
     }
